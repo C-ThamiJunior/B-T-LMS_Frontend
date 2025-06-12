@@ -1,8 +1,9 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import './RegistrationForm.css';
 
-const LoginPage = ({ setCurrentPage, handleLogin, loading, error }) => {
+const LoginPage = ({ handleLogin, loading, error }) => {
+  const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
@@ -10,9 +11,10 @@ const LoginPage = ({ setCurrentPage, handleLogin, loading, error }) => {
     e.preventDefault();
     handleLogin(username, password);
   };
+
   const handleRegisterClick = () => {
-    navigate('register');
-  }
+    navigate('/register'); // Navigate to registration page
+  };
 
   return (
     <div className="d-flex flex-column justify-content-center align-items-center min-vh-100 py-5 px-3">
@@ -25,16 +27,18 @@ const LoginPage = ({ setCurrentPage, handleLogin, loading, error }) => {
             <input
               type="text"
               id="username"
+              className="form-control"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               required
             />
           </div>
-          <div className="form-group">
+          <div className="form-group mt-3">
             <label htmlFor="password" className="form-label">Password</label>
             <input
               type="password"
               id="password"
+              className="form-control"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
@@ -43,7 +47,7 @@ const LoginPage = ({ setCurrentPage, handleLogin, loading, error }) => {
           {error && <p className="text-danger text-center small mt-2">{error}</p>}
           <button
             type="submit"
-            className="register-btn"
+            className="register-btn mt-4"
             disabled={loading}
           >
             {loading ? 'Logging in...' : 'Login'}
@@ -52,11 +56,14 @@ const LoginPage = ({ setCurrentPage, handleLogin, loading, error }) => {
         <div className="text-center mt-4">
           <p className="text-muted small">
             Don't have an account?
-            <button className="btn btn-link text-danger p-0 ms-1" onClick={handleRegisterClick}>Register</button>
+            <button type="button" className="btn btn-link text-danger p-0 ms-1" onClick={handleRegisterClick}>
+              Register
+            </button>
           </p>
         </div>
       </div>
     </div>
   );
-}
+};
+
 export default LoginPage;

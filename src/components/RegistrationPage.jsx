@@ -1,7 +1,13 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './RegistrationForm.css';
+//import axios from 'axios';
 
 const RegistrationPage = () => {
+  const navigate = useNavigate();
+  //const [message, setMessage] = useState('');
+  //const [respMsg, setRespMsg] = useState('');
+
   const [formData, setFormData] = useState({
     firstName: '',
     surname: '',
@@ -19,20 +25,49 @@ const RegistrationPage = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (formData.password !== formData.confirmPassword) {
-      alert("Passwords do not match!");
+      alert('Passwords do not match!');
       return;
     }
-    console.log('Form data submitted:', formData);
-    alert('Registration successful!');
-    // Here you would typically send the data to a server
+
+    // ---->>>FOR BACKEND CONNECTIVITY
+
+    // const payload = {
+    //   fullName: formData.firstName,
+    //   surname: formData.surname,
+    //   email: formData.email,
+    //   contactNumber: formData.contactNumber,
+    //   password: formData.password,
+    // };
+
+    // try {
+    //   console.log('Payload data submitted:', payload);
+    //   const response = await axios.post('http://localhost:8081/api/student/signup', payload);
+    //    setRespMsg(response.data)
+    //   alert(respMsg.toString);
+    //   //navigate('/login');
+    // } catch (err) {
+    //   if (err.response && err.response.data) {
+    //     console.error('Server error:', err.response.data);
+    //     alert(err.response.data.message || 'Registration failed.');
+    //   } else {
+    //     console.error('Unexpected error:', err);
+    //     alert('Something went wrong. Please try again.');
+    //   }
+    // }
+
+     alert('You have successfully Registered!');
   };
+
 
   return (
     <div className="form-container">
       <h2>REGISTER</h2>
+      {/* <p>{respMsg}</p> */}
+
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="firstName">FIRST NAME</label>
@@ -45,6 +80,7 @@ const RegistrationPage = () => {
             required
           />
         </div>
+
         <div className="form-group">
           <label htmlFor="surname">SURNAME</label>
           <input
@@ -56,6 +92,7 @@ const RegistrationPage = () => {
             required
           />
         </div>
+
         <div className="form-group">
           <label htmlFor="email">EMAIL</label>
           <input
@@ -67,6 +104,7 @@ const RegistrationPage = () => {
             required
           />
         </div>
+
         <div className="form-group">
           <label htmlFor="contactNumber">CONTACT NUMBER</label>
           <input
@@ -78,6 +116,7 @@ const RegistrationPage = () => {
             required
           />
         </div>
+
         <div className="form-group">
           <label htmlFor="password">CREATE PASSWORD</label>
           <input
@@ -89,6 +128,7 @@ const RegistrationPage = () => {
             required
           />
         </div>
+
         <div className="form-group">
           <label htmlFor="confirmPassword">CONFIRM PASSWORD</label>
           <input
@@ -100,16 +140,24 @@ const RegistrationPage = () => {
             required
           />
         </div>
+
         <button type="submit" className="register-btn">
           REGISTER
         </button>
       </form>
-       <div className="text-center mt-4">
-          <p className="text-muted small">
-            Already have an account?
-            <button className="btn btn-link p-0 ms-1" onClick={() => setCurrentPage('login')}>Login</button>
-          </p>
-        </div>
+
+      <div className="text-center mt-4">
+        <p className="text-muted small">
+          Already have an account?{' '}
+          <button
+            type="button"
+            className="btn btn-link p-0 ms-1"
+            onClick={() => navigate('/')}
+          >
+            Login
+          </button>
+        </p>
+      </div>
     </div>
   );
 };
